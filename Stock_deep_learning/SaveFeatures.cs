@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace Stock_deep_learning
+{
+    class SaveFeatures
+    {
+        public void save(double[][] input,string path,int linlenth)
+        {
+            if (input == null)
+                return;
+            FileStream filename = new FileStream(path+"features.txt", FileMode.Append); 
+            StreamWriter sw = new StreamWriter(filename);
+            //int index = 0;
+            for(int j=0;j<input.Length;j++)
+            {
+                StringBuilder sb = new StringBuilder();
+               
+                for(int i=0;i<input[j].Length;i++)
+                {
+                    sb.Append(input[j][i].ToString()+",");
+                   
+                   
+                    if ((i%linlenth==0 && i!=0) || i==input[j].Length-1)
+                    {
+                        sw.WriteLine(sb.ToString());
+                        sb.Clear();
+                     
+                    }
+                }
+              //  sw.WriteLine((++index).ToString());
+            }
+            sw.Close();
+        }
+    }
+}
