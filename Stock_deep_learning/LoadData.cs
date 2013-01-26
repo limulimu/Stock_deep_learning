@@ -9,13 +9,14 @@ namespace Stock_deep_learning
     {
         public List<double[]> Load()
         {
-            StockFileDAO sfd = new StockFileDAO();
+           
             List<double[]> final_data = new List<double[]>();
             //string pp="e:\\data\\";
            string pp = "";
-            System.Threading.Tasks.Parallel.For(0, 40, i =>
+            System.Threading.Tasks.Parallel.For(0, 4000, i =>
             {
                 string s = i.ToString("0000");
+                StockFileDAO sfd = new StockFileDAO();
                 double[][] data;
                 lock (final_data)
                 {
@@ -28,7 +29,8 @@ namespace Stock_deep_learning
                         // VTrans ts = new VTrans();
                         //SmallWindowTrans ts = new SmallWindowTrans();
                       //   SmallWindowV ts = new SmallWindowV();
-                        final_data.AddRange(ts.getRawFeature(400, 10, data));
+                         List<double[]> ddd = ts.getRawFeature(400, 40, data);
+                        final_data.AddRange(ddd);
                         Console.WriteLine(i.ToString());
                     }
                 }

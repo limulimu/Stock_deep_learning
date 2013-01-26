@@ -19,6 +19,7 @@ namespace Stock_deep_learning
             {
                 double max = 0.0;
                 double min = double.MaxValue;
+                double maxv = 0.0;
                 //Find the local max and min in a big_timewindow
                 for (int j = i; j < i+full_length; j++)
                 {
@@ -26,6 +27,8 @@ namespace Stock_deep_learning
                         max = data[j][1];
                     if (data[j][2] < min)
                         min = data[j][2];
+                    if (data[j][4] > maxv)
+                        maxv = data[j][4];
                 }
                 //give each block a value
              
@@ -41,13 +44,15 @@ namespace Stock_deep_learning
                             double zhuzi = his * block;
                              double relative_high = (data[window][1] - min) / (max - min);
                             double relative_low = (data[window][2] - min) / (max - min);
+                            double relative_v = (data[window][4] / maxv)/((relative_high-relative_low)+1);
                           //  Console.WriteLine(zhuzi.ToString());
                           //  Console.WriteLine(relative_low.ToString());
                           //  Console.ReadKey();
                            
-                            if (zhuzi < relative_high && zhuzi > relative_low)
+                            if ((zhuzi <= relative_high && zhuzi >= relative_low) || (relative_low>(zhuzi-block)&&relative_low<zhuzi)||(relative_high<(zhuzi+block)&&relative_high>zhuzi))
                           //  if (zhuzi > relative_low)
-                                frame[100 *(window-step) + his-1] = 1;
+                                frame[100 *(window-step) + his-1] =relative_v;
+                               // frame[100 * (window - step) + his - 1] = 1;
                         }
 
                     }

@@ -34,23 +34,24 @@ namespace Stock_deep_learning
                 target.LearningRate =learnning_rate;
                 target.Decay = 0.001;
                 double[][] inputs = final_data.ToArray();
-              //  int batchCount = Math.Max(1, inputs.Length / 1000);
+                int batchCount = Math.Max(1, inputs.Length / 10000);
 
                 // Create mini-batches to speed learning
-                //int[] groups = Accord.Statistics.Tools
-                  //  .RandomGroups(inputs.Length, batchCount);
-                //double[][][] batches = inputs.Subgroups(groups);
+                int[] groups = Accord.Statistics.Tools
+                    .RandomGroups(inputs.Length, batchCount);
+                double[][][] batches = inputs.Subgroups(groups);
                 //int iterations = 500;
                // double[] errors = new double[iterations];
                // for (int i = 0; i < iterations; i++)
                 int index = 0;
             while(true)
                 {
-                   // foreach (double[][] ppp in batches)
-                    //{
-                        double err = target.RunEpoch(inputs);
+                    foreach (double[][] ppp in batches)
+                    {
+                        //double err = target.RunEpoch(inputs);
+                        double err = target.RunEpoch(ppp);
                         Console.WriteLine(err.ToString());
-                    //}
+                    }
                     index++;
                     if (index % 1000 == 0)
                     {
