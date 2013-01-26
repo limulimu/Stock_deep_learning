@@ -51,8 +51,9 @@ namespace Stock_deep_learning
                         //double err = target.RunEpoch(inputs);
                         double err = target.RunEpoch(ppp);
                         Console.WriteLine(err.ToString());
+                        index++;
                     }
-                    index++;
+                  
                     if (index % 1000 == 0)
                     {
                         Random r = new Random();

@@ -44,6 +44,8 @@ namespace Stock_deep_learning
                             double zhuzi = his * block;
                              double relative_high = (data[window][1] - min) / (max - min);
                             double relative_low = (data[window][2] - min) / (max - min);
+                            double relative_open = (data[window][0] - min) / (max - min);
+                            double relative_close = (data[window][3] - min) / (max - min);
                             double relative_v = (data[window][4] / maxv)/((relative_high-relative_low)+1);
                           //  Console.WriteLine(zhuzi.ToString());
                           //  Console.WriteLine(relative_low.ToString());
@@ -51,8 +53,17 @@ namespace Stock_deep_learning
                            
                             if ((zhuzi <= relative_high && zhuzi >= relative_low) || (relative_low>(zhuzi-block)&&relative_low<zhuzi)||(relative_high<(zhuzi+block)&&relative_high>zhuzi))
                           //  if (zhuzi > relative_low)
-                                frame[100 *(window-step) + his-1] =relative_v;
+                                frame[100 *(window-step) + his-1] =1;
                                // frame[100 * (window - step) + his - 1] = 1;
+                            double relative_max=Math.Max(relative_open,relative_close);
+                            double relative_min = Math.Min(relative_open, relative_close);
+                            if ((zhuzi <= relative_max && zhuzi >= relative_min) || (relative_min > (zhuzi - block) && relative_min < zhuzi) || (relative_max < (zhuzi + block) && relative_max > zhuzi))
+                                //  if (zhuzi > relative_low)
+                                frame[100 * (window - step) + his - 1] += 1;
+                            if (relative_open < relative_close)
+                                frame[100 * (window - step) + his - 1] *= -1;
+                            frame[100 * (window - step) + his - 1] *= relative_v;
+
                         }
 
                     }
