@@ -62,7 +62,7 @@ namespace Stock_deep_learning
                                 frame[100 * (window - step) + his - 1] += 1;
                             if (relative_open < relative_close)
                                 frame[100 * (window - step) + his - 1] *= -1;
-                            frame[100 * (window - step) + his - 1] *= relative_v;
+                            frame[100 * (window - step) + his - 1] *= relative_v*100;
 
                         }
 

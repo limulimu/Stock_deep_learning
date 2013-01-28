@@ -13,13 +13,14 @@ namespace Stock_deep_learning
             List<double[]> final_data = new List<double[]>();
             //string pp="e:\\data\\";
            string pp = "";
-            System.Threading.Tasks.Parallel.For(0, 40, i =>
+            System.Threading.Tasks.Parallel.For(0, 4000, i =>
             {
                 string s = i.ToString("0000");
-                StockFileDAO sfd = new StockFileDAO();
+               
                 double[][] data;
                 lock (final_data)
                 {
+                    StockFileDAO sfd = new StockFileDAO();
                     if (sfd.check("SH60" + s, pp) != false)
                     {
                         data = sfd.getData("SH60" + s, pp);

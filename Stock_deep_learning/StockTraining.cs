@@ -34,7 +34,7 @@ namespace Stock_deep_learning
                 target.LearningRate =learnning_rate;
                 target.Decay = 0.001;
                 double[][] inputs = final_data.ToArray();
-                int batchCount = Math.Max(1, inputs.Length / 10000);
+                int batchCount = Math.Max(1, inputs.Length / 50000);
 
                 // Create mini-batches to speed learning
                 int[] groups = Accord.Statistics.Tools
@@ -49,16 +49,17 @@ namespace Stock_deep_learning
                     foreach (double[][] ppp in batches)
                     {
                         //double err = target.RunEpoch(inputs);
-                        double err = target.RunEpoch(ppp);
+                        double err = target.RunEpoch(ppp)/ppp.Length;
                         Console.WriteLine(err.ToString());
+                        if (index % 1000 == 0)
+                        {
+                            Random r = new Random();
+                            network.Save("rrr" + index.ToString() + r.Next().ToString() + ".ann");
+                        }
                         index++;
                     }
                   
-                    if (index % 1000 == 0)
-                    {
-                        Random r = new Random();
-                        network.Save("rrr" + index.ToString()+r.Next().ToString() + ".ann");
-                    }
+                 
                 }
 
               //  double startError = errors[0];

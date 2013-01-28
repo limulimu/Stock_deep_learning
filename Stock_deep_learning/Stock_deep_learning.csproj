@@ -114,6 +114,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddMovingAverage.cs" />
     <Compile Include="LoadData.cs" />
     <Compile Include="StockTraining.cs" />
     <Compile Include="Program.cs" />

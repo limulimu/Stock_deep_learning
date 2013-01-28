@@ -19,11 +19,11 @@ namespace Stock_deep_learning
         public void TestTrained(double[] input,int linelenth)
         {
             RestrictedBoltzmannMachine network;
-            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load("e:\\p1.ann");
-            // double[] r=network.Compute(input);
+            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load("e:\\ps.ann");
+             double[] r=network.Compute(input);
            //  double[] r = network.GenerateOutput(input);
           //   double[] r = network.GenerateInput(input);
-             double[] r= network.Reconstruct(input);
+          //   double[] r= network.Reconstruct(input);
 
            //  foreach (double d in input)
             //     Console.Write(d.ToString() + ",");
@@ -32,13 +32,39 @@ namespace Stock_deep_learning
              
              for (int i = 1; i <= r.Length; i++)
              {
-                // Console.Write(r[i-1].ToString("N1") + ",");
-                Console.Write((r[i-1]>0.1?1:0).ToString() + ",");
+                 Console.Write(r[i-1].ToString("N1") + ",");
+               // Console.Write((r[i-1]>0.1?1:0).ToString() + ",");
                  if((i%(linelenth<r.Length?linelenth:r.Length)) ==0 && i!=0)
                      Console.WriteLine();
 
              }
              
+        }
+        public void TestTrained(double[] input)
+        {
+            RestrictedBoltzmannMachine network;
+            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load("e:\\ps.ann");
+           
+            double[] r = network.Compute(input);
+           //   double[] r = network.GenerateOutput(input);
+            //   double[] r = network.GenerateInput(input);
+            //   double[] r= network.Reconstruct(input);
+            double[] rr = network.Reconstruct(r);
+            //  foreach (double d in input)
+            //     Console.Write(d.ToString() + ",");
+            Console.WriteLine("*****************************************************");
+            //foreach (double d in r)
+            double err = 0.0;
+            for (int i = 0; i < rr.Length; i++)
+            {
+               // Console.Write(r[i - 1].ToString("N3") + ",");
+                 Console.Write((rr[i]).ToString() + ",");
+               // err += (rr[i] - input[i]) * (rr[i] - input[i]);
+               // Console.Write();    
+
+            }
+            Console.WriteLine(err);
+
         }
     }
 }
