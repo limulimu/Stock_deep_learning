@@ -40,9 +40,9 @@ namespace Stock_deep_learning
         {
             if (input == null)
                 return;
-            FileStream filename = new FileStream(path + "features.txt", FileMode.OpenOrCreate);
+            FileStream filename = new FileStream(path + "features.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(filename);
-            //int index = 0;
+            int index = 0;
             for (int j = 0; j < writinglenth; j++)
             {
                 StringBuilder sb = new StringBuilder();
@@ -50,15 +50,17 @@ namespace Stock_deep_learning
                 for (int i = 0; i < input[j].Length; i++)
                 {
                     sb.Append(input[j][i].ToString() + ",");
-
-
-                  //  if ((i % (linlenth-1) == 0 && i != 0) || i == input[j].Length - 1)
-                    if ((i % (linlenth - 1) == 0 && i != 0))
+                    index++;
+                    if (index==linlenth)
                     {
                         sw.WriteLine(sb.ToString());
                         sb.Clear();
+                        index = 0;
 
                     }
+
+                  //  if ((i % (linlenth-1) == 0 && i != 0) || i == input[j].Length - 1)
+                    
                 }
                 //  sw.WriteLine((++index).ToString());
             }

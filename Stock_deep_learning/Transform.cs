@@ -9,7 +9,7 @@ namespace Stock_deep_learning
 {
     class Transform
     {
-        public List<double[]> getRawFeature(int full_length, int window_size,double[][] data)
+        public List<double[]> getRawFeature(int full_length, int window_size,double[][] data,int framesize)
         {
             List<double[]> result = new List<double[]>();
            // ArrayList ar = new ArrayList();
@@ -32,14 +32,14 @@ namespace Stock_deep_learning
                 }
                 //give each block a value
              
-                double block = (max - min) / 100;
+                double block = (max - min) / framesize;
                 for (int step = i; step < i + full_length - window_size; step += window_size / 2)
                 {
-                    double[] frame = new double[window_size * 100];
+                    double[] frame = new double[window_size * framesize];
                     for (int window = step; window < step + window_size; window++)
                     {
                         //judge if one block should be 0 or 1
-                        for (int his = 1; his <= 100; his++)
+                        for (int his = 1; his <= framesize; his++)
                         {
                             double zhuzi = his * block;
                              double relative_high = (data[window][1] - min) / (max - min);
@@ -53,16 +53,16 @@ namespace Stock_deep_learning
                            
                             if ((zhuzi <= relative_high && zhuzi >= relative_low) || (relative_low>(zhuzi-block)&&relative_low<zhuzi)||(relative_high<(zhuzi+block)&&relative_high>zhuzi))
                           //  if (zhuzi > relative_low)
-                                frame[100 *(window-step) + his-1] =1;
+                                frame[framesize *(window-step) + his-1] =1;
                                // frame[100 * (window - step) + his - 1] = 1;
                             double relative_max=Math.Max(relative_open,relative_close);
                             double relative_min = Math.Min(relative_open, relative_close);
-                            if ((zhuzi <= relative_max && zhuzi >= relative_min) || (relative_min > (zhuzi - block) && relative_min < zhuzi) || (relative_max < (zhuzi + block) && relative_max > zhuzi))
+                          //  if ((zhuzi <= relative_max && zhuzi >= relative_min) || (relative_min > (zhuzi - block) && relative_min < zhuzi) || (relative_max < (zhuzi + block) && relative_max > zhuzi))
                                 //  if (zhuzi > relative_low)
-                                frame[100 * (window - step) + his - 1] += 1;
-                            if (relative_open < relative_close)
-                                frame[100 * (window - step) + his - 1] *= -1;
-                            frame[100 * (window - step) + his - 1] *= relative_v*100;
+                              //  frame[100 * (window - step) + his - 1] += 1;
+                          //  if (relative_open < relative_close)
+                             //   frame[100 * (window - step) + his - 1] *= -1;
+                          //  frame[100 * (window - step) + his - 1] *= relative_v*10;
 
                         }
 

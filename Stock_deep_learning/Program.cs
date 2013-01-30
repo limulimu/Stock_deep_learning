@@ -43,9 +43,9 @@ namespace Stock_deep_learning
            //     tn.TestTrained(d);
            // }
            // SaveFeatures sf = new SaveFeatures();
-           // sf.save(dd.ToArray(), "", 100,1000);
-            st.train(dd, 4000, 200, 0.1);
-            Console.Read();
+            //sf.save(dd.ToArray(), "", 30,1000);
+            st.train(dd, 900, 100, 0.1);
+          //  Console.Read();
             
         }
     }

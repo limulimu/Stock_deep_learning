@@ -11,9 +11,12 @@ namespace Stock_deep_learning
         {
            
             List<double[]> final_data = new List<double[]>();
-            //string pp="e:\\data\\";
-           string pp = "";
-            System.Threading.Tasks.Parallel.For(0, 4000, i =>
+            string pp = "";
+#if DEBUG
+           pp="e:\\data\\";
+#endif
+           
+            System.Threading.Tasks.Parallel.For(0, 400, i =>
             {
                 string s = i.ToString("0000");
                
@@ -25,12 +28,12 @@ namespace Stock_deep_learning
                     {
                         data = sfd.getData("SH60" + s, pp);
 
-                         Transform ts = new Transform();
+                        // Transform ts = new Transform();
                         // SimpleTrans ts = new SimpleTrans();
                         // VTrans ts = new VTrans();
-                        //SmallWindowTrans ts = new SmallWindowTrans();
+                        SmallWindowTrans ts = new SmallWindowTrans();
                       //   SmallWindowV ts = new SmallWindowV();
-                         List<double[]> ddd = ts.getRawFeature(400, 40, data);
+                         List<double[]> ddd = ts.getRawFeature(35, 30, data,30);
                         final_data.AddRange(ddd);
                         Console.WriteLine(i.ToString());
                     }

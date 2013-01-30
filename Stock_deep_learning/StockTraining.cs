@@ -20,9 +20,9 @@ namespace Stock_deep_learning
             Accord.Math.Tools.SetupGenerator(0);
                 BernoulliFunction.Random = new ThreadSafeRandom(0);
                 GaussianFunction.Random.SetSeed(0);
-
-                RestrictedBoltzmannMachine network =
-                    RestrictedBoltzmannMachine.CreateGaussianBernoulli(visible, hidden);
+                BernoulliFunction activation = new BernoulliFunction();
+                RestrictedBoltzmannMachine network = new RestrictedBoltzmannMachine(activation, visible, hidden);
+                 //   RestrictedBoltzmannMachine.CreateGaussianBernoulli(visible, hidden);
                    //RestrictedBoltzmannMachine.CreateGaussianBernoulli(40, 10);
                 new GaussianWeights(network).Randomize();
                 network.UpdateVisibleWeights();
@@ -34,7 +34,7 @@ namespace Stock_deep_learning
                 target.LearningRate =learnning_rate;
                 target.Decay = 0.001;
                 double[][] inputs = final_data.ToArray();
-                int batchCount = Math.Max(1, inputs.Length / 50000);
+                int batchCount = Math.Max(1, inputs.Length / 10000);
 
                 // Create mini-batches to speed learning
                 int[] groups = Accord.Statistics.Tools
