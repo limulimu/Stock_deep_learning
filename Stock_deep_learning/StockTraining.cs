@@ -34,7 +34,7 @@ namespace Stock_deep_learning
                 target.LearningRate =learnning_rate;
                 target.Decay = 0.001;
                 double[][] inputs = final_data.ToArray();
-                int batchCount = Math.Max(1, inputs.Length / 10000);
+                int batchCount = Math.Max(1, inputs.Length / 100);
 
                 // Create mini-batches to speed learning
                 int[] groups = Accord.Statistics.Tools

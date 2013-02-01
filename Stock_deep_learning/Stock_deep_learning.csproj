@@ -7,7 +7,7 @@
     <ProjectGuid>{BECED9C3-99CB-4104-BCBB-A87F7389AD2B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>qa</RootNamespace>
+    <RootNamespace>Stock_deep_learning</RootNamespace>
     <AssemblyName>stock</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddMovingAverage.cs" />
+    <Compile Include="FirstLayerCoding.cs" />
     <Compile Include="LoadData.cs" />
     <Compile Include="StockTraining.cs" />
     <Compile Include="Program.cs" />

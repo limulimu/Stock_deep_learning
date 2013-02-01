@@ -9,12 +9,12 @@ namespace Stock_deep_learning
 {
     class SmallWindowV
     {
-        public List<double[]> getRawFeature(int full_length, int window_size, double[][] data)
+        public List<double[]> getRawFeature(int full_length, int window_size, double[][] data,int framesize)
         {
             List<double[]> result = new List<double[]>();
             // ArrayList ar = new ArrayList();
 
-            double max = 0.0;
+           
             //double min = double.MaxValue;
             //Find the local max and min in a big_timewindow
             // for (int j = 0; j < window_size; j++)
@@ -29,20 +29,22 @@ namespace Stock_deep_learning
             //  double block = (max - min) / 100;
             for (int step = 0; step < data.Length-window_size; step += window_size / 2)
             {
+                double max = 0.0;
                 for (int window = step; window < step + window_size; window++)
                 {
                     if (data[window][4] > max)
                         max = data[window][4];
                   
                 }
-                double[] frame = new double[window_size];
+                double block = max / framesize;
+                double[] frame = new double[window_size * framesize];
                 for (int window = step; window < step + window_size; window++)
                 {
                     //judge if one block should be 0 or 1
                     //   for (int his = 1; his <= 4; his++)
                     // {
                     //   double zhuzi = his * block;
-                    double relative_high =( data[window][4] / max )+1;
+                    double relative_high =( data[window][4] );
                   //  double relative_high = (data[window][4] / max) *100;
                     //  Console.WriteLine(zhuzi.ToString());
                     //  Console.WriteLine(relative_low.ToString());
@@ -50,8 +52,26 @@ namespace Stock_deep_learning
 
                     //if (zhuzi < relative_high && zhuzi > relative_low)
                     //  if (zhuzi > relative_low)
-                    frame[(window - step)] = relative_high;
+                   // frame[(window - step)] = relative_high;
                     //  }
+                    double zhuzi = 0.0;
+                    for (int his = 1; his <= framesize; his++)
+                    {
+                        zhuzi = his * block;
+
+                        //    double relative_v = (data[window][4] / maxv)/((relative_high-relative_low)+1);
+                        //  Console.WriteLine(zhuzi.ToString());
+                        //  Console.WriteLine(relative_low.ToString());
+                        //  Console.ReadKey();
+
+                        if ( relative_high > zhuzi)
+                        //  if (zhuzi > relative_low)
+                        {
+                            frame[framesize * (window - step) + his - 1] = 1;
+                           // count++;
+                        }
+                        // zhuzi = 0.0;
+                    }
 
                 }
                 result.Add(frame);

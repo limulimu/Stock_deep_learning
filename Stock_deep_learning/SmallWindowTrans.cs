@@ -37,6 +37,9 @@ namespace Stock_deep_learning
                          if (data[window][2] < min)
                              min = data[window][2];
                     }
+                    //Console.WriteLine("max:" + max.ToString());
+                   // Console.WriteLine("min:" + min.ToString());
+                   // Console.WriteLine("*");
                     double block = (max - min) / framesize;
                     double[] frame = new double[window_size * framesize];
                     for (int window = step; window < step + window_size; window++)
@@ -64,22 +67,31 @@ namespace Stock_deep_learning
                         //frame[(window - step) * 4 + 2] = relative_low;
                         //frame[(window - step) * 4 + 3] = relative_close;
                         //  }
+                        int count = 0;
+                        double relative_high = (data[window][1] - min) ;
+                        double relative_low = (data[window][2] - min);
+                      //  double relative_open = (data[window][0] - min) / (max - min);
+                     //   double relative_close = (data[window][3] - min) / (max - min);
+                        double zhuzi = 0.0;
                         for (int his = 1; his <= framesize; his++)
                         {
-                            double zhuzi = his * block;
-                            double relative_high = (data[window][1] - min) / (max - min);
-                            double relative_low = (data[window][2] - min) / (max - min);
-                            double relative_open = (data[window][0] - min) / (max - min);
-                            double relative_close = (data[window][3] - min) / (max - min);
+                            zhuzi = his * block;
+                 
                             //    double relative_v = (data[window][4] / maxv)/((relative_high-relative_low)+1);
                             //  Console.WriteLine(zhuzi.ToString());
                             //  Console.WriteLine(relative_low.ToString());
                             //  Console.ReadKey();
 
-                            if ((zhuzi <= relative_high && zhuzi >= relative_low) || (relative_low > (zhuzi - block) && relative_low < zhuzi) || (relative_high < (zhuzi + block) && relative_high > zhuzi))
-                                //  if (zhuzi > relative_low)
+                            if ((zhuzi <= relative_high && zhuzi >= relative_low) || (relative_low > (zhuzi - block) && relative_low < zhuzi) || (relative_high > (zhuzi - block) && relative_high < zhuzi))
+                            //  if (zhuzi > relative_low)
+                            {
                                 frame[framesize * (window - step) + his - 1] = 1;
+                                count++;
+                            }
+                           // zhuzi = 0.0;
                         }
+                      //  if (count == 0)
+                      //      Console.WriteLine("!!!");
                     }
                         result.Add(frame);
                     

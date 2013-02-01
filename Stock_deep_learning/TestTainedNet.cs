@@ -19,31 +19,35 @@ namespace Stock_deep_learning
         public void TestTrained(double[] input,int linelenth)
         {
             RestrictedBoltzmannMachine network;
-            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load("e:\\ps.ann");
-             double[] r=network.Compute(input);
-           //  double[] r = network.GenerateOutput(input);
-          //   double[] r = network.GenerateInput(input);
-          //   double[] r= network.Reconstruct(input);
+            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load("v.ann");
+             double[] rr=network.Compute(input);
+             double[] r = network.GenerateOutput(input);
+            // double[] r = network.GenerateInput(rr);
+           //  double[] r= network.Reconstruct(rr);
 
            //  foreach (double d in input)
             //     Console.Write(d.ToString() + ",");
              Console.WriteLine("*****************************************************");
              //foreach (double d in r)
-             
+             int index = 0;
              for (int i = 1; i <= r.Length; i++)
              {
-                 Console.Write(r[i-1].ToString("N1") + ",");
+                 Console.Write(r[i-1].ToString("N0") + ",");
                // Console.Write((r[i-1]>0.1?1:0).ToString() + ",");
-                 if((i%(linelenth<r.Length?linelenth:r.Length)) ==0 && i!=0)
-                     Console.WriteLine();
-
+                // if((i%(linelenth<r.Length?linelenth:r.Length)) ==0 && i!=0)
+                   index++;
+                   if (index == linelenth)
+                   {
+                       Console.WriteLine();
+                       index = 0;
+                   }
              }
              
         }
         public void TestTrained(double[] input)
         {
             RestrictedBoltzmannMachine network;
-            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load("e:\\ps.ann");
+            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load("p.ann");
            
             double[] r = network.Compute(input);
            //   double[] r = network.GenerateOutput(input);

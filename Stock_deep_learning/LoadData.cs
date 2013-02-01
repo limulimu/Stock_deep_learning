@@ -21,18 +21,18 @@ namespace Stock_deep_learning
                 string s = i.ToString("0000");
                
                 double[][] data;
-                lock (final_data)
+             //   lock (final_data)
                 {
                     StockFileDAO sfd = new StockFileDAO();
                     if (sfd.check("SH60" + s, pp) != false)
                     {
                         data = sfd.getData("SH60" + s, pp);
 
-                        // Transform ts = new Transform();
+                       //  Transform ts = new Transform();
                         // SimpleTrans ts = new SimpleTrans();
                         // VTrans ts = new VTrans();
-                        SmallWindowTrans ts = new SmallWindowTrans();
-                      //   SmallWindowV ts = new SmallWindowV();
+                       SmallWindowTrans ts = new SmallWindowTrans();
+                        // SmallWindowV ts = new SmallWindowV();
                          List<double[]> ddd = ts.getRawFeature(35, 30, data,30);
                         final_data.AddRange(ddd);
                         Console.WriteLine(i.ToString());
