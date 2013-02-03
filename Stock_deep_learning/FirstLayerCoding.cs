@@ -16,13 +16,15 @@ namespace Stock_deep_learning
 {
     class FirstLayerCoding
     {
-     private string m_ann;
+  //   private string m_ann;
      RestrictedBoltzmannMachine network;
-        public List<double[]> Load(string ann)
+        RestrictedBoltzmannMachine network2;
+        public List<double[]> Load(string firstLayer,string secondLayer)
         {
-            m_ann = ann;
+         //   m_ann = firstLayer;
           
-            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load(m_ann);
+            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load(firstLayer);
+            network2 = (RestrictedBoltzmannMachine)ActivationNetwork.Load(secondLayer);
             List<double[]> final_data = new List<double[]>();
             string pp = "";
 #if DEBUG
@@ -38,9 +40,9 @@ namespace Stock_deep_learning
               //  lock (final_data)
                 {
                  
-                    if (sfd.check("SH60" + s, pp) != false)
+                    if (sfd.check("SZ00" + s, pp) != false)
                     {
-                        data = sfd.getData("SH60" + s, pp);
+                        data = sfd.getData("SZ00" + s, pp);
 
                         //  Transform ts = new Transform();
                         // SimpleTrans ts = new SimpleTrans();
@@ -48,7 +50,7 @@ namespace Stock_deep_learning
                        
                         // SmallWindowV ts = new SmallWindowV();
                         List<double[]> ddd = ts.getRawFeature(35, 30, data, 30);
-                        final_data.AddRange(coding(ddd));
+                        final_data.AddRange(SecondeLayercoding(ddd));
                         Console.WriteLine(i.ToString());
                     }
                 }
@@ -85,6 +87,113 @@ namespace Stock_deep_learning
             }
             return result; 
 
+        }
+        private List<double[]> rawcoding(List<double[]> input)
+        {
+            List<double[]> result = new List<double[]>();
+            List<double[]> temp = new List<double[]>();
+
+            double[][] inputarray = input.ToArray();
+           // int index = 0;
+            double[] r;
+           // double[] tt = new double[1000];
+            for (int i = 0; i < inputarray.Length; i++)
+            {
+                r = network.GenerateOutput(inputarray[i]);
+               if(r!=null)
+                    result.Add(r);
+                  
+            }
+            return result;
+
+        }
+        public List<double[]> SecondeLayercoding(List<double[]> input)
+        {
+            List<double[]> result = new List<double[]>();
+            List<double[]> temp = new List<double[]>();
+
+            double[][] inputarray = input.ToArray();
+            int index = 0;
+            double[] r;
+            double[] tt = new double[1000];
+            double[] rsecond=new double[101];
+            double[] rr;
+            int label=0;
+            for (int i = 0; i < inputarray.Length-1; i++)
+            {
+                r = network.GenerateOutput(inputarray[i]);
+               
+                index++;
+                temp.Add(r);
+                if (index % 10 == 0)
+                {
+                    double[][] temparray = temp.ToArray();
+                    label = checklable(inputarray[i + 1]);
+                    for (int j = 0; j < temparray.Length; j++)
+                    {
+                        for (int m = 0; m < temparray[j].Length; m++)
+                        {
+                            tt[j + m] = temparray[j][m];
+                        }
+                    }
+                    rr= network2.GenerateOutput(tt);
+                    for(int m=0;m<rr.Length;m++)
+                    {
+                        rsecond[m]=rr[m];
+                    }
+                    rsecond[100]=label;
+                    result.Add(rsecond);
+                    index = 0;
+                }
+            }
+            return result;
+
+        }
+
+
+        int checklable(double[] input)
+        {
+            int min=0;
+            for(int i=450;i<480;i++)
+            {
+                if(input[i]==1)
+                {
+                    min=i-450;
+                    break;
+                }
+            }
+            int max=0;
+              for(int i=870;i<900;i++)
+            {
+                if(input[i]==1)
+                {
+                    max=i-870;
+                    break;
+                }
+            }
+              if (max - min > 10)
+                  return 1;
+              max = 0;
+              min = 0;
+              for (int i = 479; i > 449; i--)
+              {
+                  if (input[i] == 1)
+                  {
+                      min = 479-i;
+                      break;
+                  }
+              }
+              for (int i = 899; i >869; i--)
+              {
+                  if (input[i] == 1)
+                  {
+                      max = 899-i;
+                      break;
+                  }
+              }
+              if (min - max > 10)
+                  return -1;
+              return 0;
         }
     }
 }

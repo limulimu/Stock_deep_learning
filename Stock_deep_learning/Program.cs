@@ -63,17 +63,18 @@ namespace Stock_deep_learning
 
 //            tn.TestTrained(tt, 30);
 
-            FirstLayerCoding ld = new FirstLayerCoding();
-             // LoadData ld = new LoadData();
+          //  FirstLayerCoding ld = new FirstLayerCoding();
+              LoadData ld = new LoadData();
               StockTraining st = new StockTraining();
-              List<double[]> dd = ld.Load("v.ann");
+             // List<double[]> dd = ld.Load("v.ann","secondlyer.ann");
+              List<double[]> dd = ld.Load();
             //foreach (double[] d in dd)
            // {
            //     tn.TestTrained(d);
            // }
-            //SaveFeatures sf = new SaveFeatures();
-          //sf.save(dd.ToArray(), "", 30,1000);
-              st.train(dd, 900, 500, 0.001);
+          //  SaveFeatures sf = new SaveFeatures();
+          //  sf.save(dd.ToArray(), "", 101,5000);
+            //  st.train(dd, 100, 100, 0.001);
             Console.Read();
             
         }
