@@ -32,7 +32,7 @@ namespace Stock_deep_learning
 #endif
            StockFileDAO sfd = new StockFileDAO();
            SmallWindowTrans ts = new SmallWindowTrans();
-            System.Threading.Tasks.Parallel.For(0, 400, i =>
+            System.Threading.Tasks.Parallel.For(0, 4000, i =>
             {
                 string s = i.ToString("0000");
                
@@ -40,17 +40,22 @@ namespace Stock_deep_learning
               //  lock (final_data)
                 {
                  
-                    if (sfd.check("SZ00" + s, pp) != false)
+                    if (sfd.check("SH60" + s, pp) != false)
                     {
-                        data = sfd.getData("SZ00" + s, pp);
+                        data = sfd.getData("SH60" + s, pp, 1990, 2012);
 
                         //  Transform ts = new Transform();
                         // SimpleTrans ts = new SimpleTrans();
                         // VTrans ts = new VTrans();
                        
                         // SmallWindowV ts = new SmallWindowV();
-                        List<double[]> ddd = ts.getRawFeature(35, 30, data, 30);
-                        final_data.AddRange(SecondeLayercoding(ddd));
+                        if (data != null)
+                        {
+                            List<double[]> ddd = ts.getRawFeature(35, 30, data, 30);
+                            //final_data.AddRange(SecondeLayercoding(ddd));
+
+                            final_data.AddRange(coding(ddd));
+                        }
                         Console.WriteLine(i.ToString());
                     }
                 }
