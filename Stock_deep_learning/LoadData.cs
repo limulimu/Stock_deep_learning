@@ -16,7 +16,7 @@ namespace Stock_deep_learning
            pp="e:\\data\\";
 #endif
            
-            System.Threading.Tasks.Parallel.For(0, 400, i =>
+            System.Threading.Tasks.Parallel.For(0, 4000, i =>
             {
                 string s = i.ToString("0000");
                
@@ -33,8 +33,12 @@ namespace Stock_deep_learning
                         // VTrans ts = new VTrans();
                        SmallWindowTrans ts = new SmallWindowTrans();
                         // SmallWindowV ts = new SmallWindowV();
-                         List<double[]> ddd = ts.getRawFeature(35, 30, data,30);
-                        final_data.AddRange(ddd);
+                        List<double[]> ddd;
+                        if (data != null)
+                        {
+                            ddd = ts.getRawFeature(35, 30, data, 30);
+                            final_data.AddRange(ddd);
+                        }
                         Console.WriteLine(i.ToString());
                     }
                 }

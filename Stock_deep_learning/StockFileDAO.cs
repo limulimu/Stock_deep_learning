@@ -98,8 +98,9 @@ namespace Stock_deep_learning
                     data.Add(record_d);
                 }
             }
+            if(data.Count>200)
             return (data.ToArray());
-
+            return null;
         }
     }
 }
