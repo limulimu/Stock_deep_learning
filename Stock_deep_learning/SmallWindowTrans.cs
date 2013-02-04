@@ -26,7 +26,7 @@ namespace Stock_deep_learning
                 //give each block a value
 
               //  double block = (max - min) / 100;
-                for (int step = 0; step < data.Length - window_size; step += window_size / 2)
+                for (int step = 0; step < data.Length - window_size; step += window_size )
                 {
                     double max = 0.0;
                     double min = double.MaxValue;
@@ -41,7 +41,7 @@ namespace Stock_deep_learning
                    // Console.WriteLine("min:" + min.ToString());
                    // Console.WriteLine("*");
                     double block = (max - min) / framesize;
-                    double[] frame = new double[window_size * framesize];
+                    double[] frame = new double[window_size * framesize+1];
                     for (int window = step; window < step + window_size; window++)
                     {
                         //judge if one block should be 0 or 1
@@ -93,6 +93,8 @@ namespace Stock_deep_learning
                       //  if (count == 0)
                       //      Console.WriteLine("!!!");
                     }
+                    Random rrr = new Random();
+                    frame[frame.Length - 1] = rrr.Next()%2;
                         result.Add(frame);
                     
                     //  ar.Add(frame);

@@ -49,6 +49,14 @@ namespace Stock_deep_learning
                     foreach (double[][] ppp in batches)
                     {
                         //double err = target.RunEpoch(inputs);
+                        bool check=false;
+                        foreach (double[] p in ppp)
+                        {
+                            if (p == null)
+                                check = true;
+                        }
+                        if (check)
+                            continue;
                         double err = target.RunEpoch(ppp)/ppp.Length;
                         Console.WriteLine(err.ToString());
                         index++;

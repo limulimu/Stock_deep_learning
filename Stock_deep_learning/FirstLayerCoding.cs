@@ -54,7 +54,50 @@ namespace Stock_deep_learning
                             List<double[]> ddd = ts.getRawFeature(35, 30, data, 30);
                             //final_data.AddRange(SecondeLayercoding(ddd));
 
-                            final_data.AddRange(coding(ddd));
+                            final_data.AddRange(rawcoding(ddd));
+                        }
+                        Console.WriteLine(i.ToString());
+                    }
+                }
+            });
+            return final_data;
+        }
+        public List<double[]> LoadL2(string firstLayer, string secondLayer)
+        {
+            //   m_ann = firstLayer;
+
+            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load(firstLayer);
+            network2 = (RestrictedBoltzmannMachine)ActivationNetwork.Load(secondLayer);
+            List<double[]> final_data = new List<double[]>();
+            string pp = "";
+#if DEBUG
+            pp = "e:\\data\\";
+#endif
+            StockFileDAO sfd = new StockFileDAO();
+            SmallWindowTrans ts = new SmallWindowTrans();
+            System.Threading.Tasks.Parallel.For(0, 4000, i =>
+            {
+                string s = i.ToString("0000");
+
+                double[][] data;
+                //  lock (final_data)
+                {
+
+                    if (sfd.check("SH60" + s, pp) != false)
+                    {
+                        data = sfd.getData("SH60" + s, pp, 2000, 2012);
+
+                        //  Transform ts = new Transform();
+                        // SimpleTrans ts = new SimpleTrans();
+                        // VTrans ts = new VTrans();
+
+                        // SmallWindowV ts = new SmallWindowV();
+                        if (data != null)
+                        {
+                            List<double[]> ddd = ts.getRawFeature(35, 30, data, 30);
+                            final_data.AddRange(SecondeLayercoding(ddd));
+
+                           // final_data.AddRange(coding(ddd));
                         }
                         Console.WriteLine(i.ToString());
                     }
@@ -100,13 +143,20 @@ namespace Stock_deep_learning
 
             double[][] inputarray = input.ToArray();
            // int index = 0;
-            double[] r;
+            double[] r=new double[network.Hidden.Neurons.Count()+1];
            // double[] tt = new double[1000];
             for (int i = 0; i < inputarray.Length; i++)
             {
-                r = network.GenerateOutput(inputarray[i]);
-               if(r!=null)
+               double[] first_reconstrunction = network.GenerateOutput(inputarray[i]);
+                if(first_reconstrunction!=null)
+                {
+               for (int j = 0; j < r.Length-2; j++)
+                   r[j] = first_reconstrunction[j];
+                  Random rrr = new Random();
+                  r[r.Length - 1] = rrr.Next() % 2;
+               
                     result.Add(r);
+            }
                   
             }
             return result;
@@ -196,7 +246,7 @@ namespace Stock_deep_learning
                       break;
                   }
               }
-              if (min - max > 10)
+              if (max-min > 10)
                   return -1;
               return 0;
         }

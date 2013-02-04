@@ -46,22 +46,26 @@ namespace Stock_deep_learning
             for (int j = 0; j < writinglenth; j++)
             {
                 StringBuilder sb = new StringBuilder();
-
-                for (int i = 0; i < input[j].Length; i++)
+                try
                 {
-                    sb.Append(input[j][i].ToString() + ",");
-                    index++;
-                    if (index==linlenth)
+                    for (int i = 0; i < input[j].Length; i++)
                     {
-                        sw.WriteLine(sb.ToString());
-                        sb.Clear();
-                        index = 0;
+                        sb.Append(input[j][i].ToString() + ",");
+                        index++;
+                        if (index == linlenth)
+                        {
+                            sw.WriteLine(sb.ToString());
+                            sb.Clear();
+                            index = 0;
+
+                        }
+
+                        //  if ((i % (linlenth-1) == 0 && i != 0) || i == input[j].Length - 1)
 
                     }
-
-                  //  if ((i % (linlenth-1) == 0 && i != 0) || i == input[j].Length - 1)
-                    
                 }
+                catch
+                { continue; }
                 //  sw.WriteLine((++index).ToString());
             }
             sw.Close();
