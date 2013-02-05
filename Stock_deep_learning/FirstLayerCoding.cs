@@ -28,7 +28,7 @@ namespace Stock_deep_learning
             List<double[]> final_data = new List<double[]>();
             string pp = "";
 #if DEBUG
-           pp="e:\\data\\";
+           pp="D:\\EXPORT\\";
 #endif
            StockFileDAO sfd = new StockFileDAO();
            SmallWindowTrans ts = new SmallWindowTrans();
@@ -54,7 +54,7 @@ namespace Stock_deep_learning
                             List<double[]> ddd = ts.getRawFeature(35, 30, data, 30);
                             //final_data.AddRange(SecondeLayercoding(ddd));
 
-                            final_data.AddRange(rawcoding(ddd));
+                            final_data.AddRange(rawcodingL2(rawcoding(ddd)));
                         }
                         Console.WriteLine(i.ToString());
                     }
@@ -158,6 +158,32 @@ namespace Stock_deep_learning
                     result.Add(r);
             }
                   
+            }
+            return result;
+
+        }
+        private List<double[]> rawcodingL2(List<double[]> input)
+        {
+            List<double[]> result = new List<double[]>();
+            List<double[]> temp = new List<double[]>();
+
+            double[][] inputarray = input.ToArray();
+            // int index = 0;
+            double[] r = new double[network2.Hidden.Neurons.Count() + 1];
+            // double[] tt = new double[1000];
+            for (int i = 0; i < inputarray.Length; i++)
+            {
+                double[] L2_reconstrunction = network2.GenerateOutput(inputarray[i]);
+                if (L2_reconstrunction != null)
+                {
+                    for (int j = 0; j < r.Length - 2; j++)
+                        r[j] = L2_reconstrunction[j];
+                    Random rrr = new Random();
+                    r[r.Length - 1] = rrr.Next() % 2;
+
+                    result.Add(r);
+                }
+
             }
             return result;
 

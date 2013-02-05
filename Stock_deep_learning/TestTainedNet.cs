@@ -18,11 +18,16 @@ namespace Stock_deep_learning
     {
         public void TestTrained(double[] input,int linelenth)
         {
-            RestrictedBoltzmannMachine network;
-            network = (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-2012.ann");
-             double[] rr=network.Compute(input);
-            // double[] r = network.GenerateOutput(input);
-             double[] r = network.GenerateInput(rr);
+            RestrictedBoltzmannMachine network= (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-500.ann");
+            RestrictedBoltzmannMachine network1 = (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-200.ann");
+            RestrictedBoltzmannMachine network2 = (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-50.ann");
+            // double[] rr=network.Compute(input);
+             double[] r0 = network.GenerateOutput(addone(input));
+             double[] r1 = network1.GenerateOutput(addone(r0));
+          //   double[] r2 = network2.GenerateOutput(addone(r1));
+             double[] rr2 = network1.GenerateInput(r1);
+          //   double[] rr1 = network1.GenerateInput(cutone(rr2));
+             double[] r = network.GenerateInput(cutone(rr2));
            //  double[] r= network.Reconstruct(rr);
 
            //  foreach (double d in input)
@@ -69,6 +74,27 @@ namespace Stock_deep_learning
             }
             Console.WriteLine(err);
 
+        }
+        private double[] addone(double[] input)
+        {
+            double[] output = new double[input.Length + 1];
+            for (int i = 0; i < input.Length; i++)
+            {
+                output[i] = input[i];
+            }
+            Random r = new Random();
+            output[input.Length ] = r.Next() % 2;
+            return output;
+        }
+        private double[] cutone(double[] input)
+        {
+            double[] output = new double[input.Length - 1];
+            for (int i = 0; i < input.Length-1; i++)
+            {
+                output[i] = input[i];
+            }
+   
+            return output;
         }
     }
 }
