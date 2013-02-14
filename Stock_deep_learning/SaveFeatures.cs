@@ -54,6 +54,7 @@ namespace Stock_deep_learning
                         index++;
                         if (index == linlenth)
                         {
+                         //   if (input[j][i] != 0)
                             sw.WriteLine(sb.ToString());
                             sb.Clear();
                             index = 0;
@@ -65,7 +66,7 @@ namespace Stock_deep_learning
                     }
                 }
                 catch
-                { continue; }
+                { break; }
                 //  sw.WriteLine((++index).ToString());
             }
             sw.Close();

@@ -18,16 +18,16 @@ namespace Stock_deep_learning
     {
         public void TestTrained(double[] input,int linelenth)
         {
-            RestrictedBoltzmannMachine network= (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-500.ann");
-            RestrictedBoltzmannMachine network1 = (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-200.ann");
-            RestrictedBoltzmannMachine network2 = (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-50.ann");
+            RestrictedBoltzmannMachine network= (RestrictedBoltzmannMachine)ActivationNetwork.Load("P30.ann");
+            RestrictedBoltzmannMachine network1 = (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-100.ann");
+        //    RestrictedBoltzmannMachine network2 = (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-50.ann");
             // double[] rr=network.Compute(input);
              double[] r0 = network.GenerateOutput(addone(input));
-             double[] r1 = network1.GenerateOutput(addone(r0));
+            // double[] r1 = network1.GenerateOutput(addone(r0));
           //   double[] r2 = network2.GenerateOutput(addone(r1));
-             double[] rr2 = network1.GenerateInput(r1);
+          //  double[] rr2 = network1.GenerateInput(r1);
           //   double[] rr1 = network1.GenerateInput(cutone(rr2));
-             double[] r = network.GenerateInput(cutone(rr2));
+             double[] r = network.GenerateInput(r0);
            //  double[] r= network.Reconstruct(rr);
 
            //  foreach (double d in input)

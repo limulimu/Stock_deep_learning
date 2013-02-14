@@ -30,7 +30,7 @@ namespace Stock_deep_learning
 
                 ContrastiveDivergenceLearning target = new ContrastiveDivergenceLearning(network);
 
-                target.Momentum = 0.9;
+                target.Momentum = 0.5;
                 target.LearningRate =learnning_rate;
                 target.Decay = 0.001;
                 double[][] inputs = final_data.ToArray();

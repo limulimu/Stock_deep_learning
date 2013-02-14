@@ -24,11 +24,12 @@ namespace Stock_deep_learning
          //   m_ann = firstLayer;
           
             network = (RestrictedBoltzmannMachine)ActivationNetwork.Load(firstLayer);
-            network2 = (RestrictedBoltzmannMachine)ActivationNetwork.Load(secondLayer);
+           // network2 = (RestrictedBoltzmannMachine)ActivationNetwork.Load(secondLayer);
             List<double[]> final_data = new List<double[]>();
             string pp = "";
 #if DEBUG
-           pp="D:\\EXPORT\\";
+          // pp="D:\\EXPORT\\";
+            pp = "e:\\data\\";
 #endif
            StockFileDAO sfd = new StockFileDAO();
            SmallWindowTrans ts = new SmallWindowTrans();
@@ -54,7 +55,8 @@ namespace Stock_deep_learning
                             List<double[]> ddd = ts.getRawFeature(35, 30, data, 30);
                             //final_data.AddRange(SecondeLayercoding(ddd));
 
-                            final_data.AddRange(rawcodingL2(rawcoding(ddd)));
+                           // final_data.AddRange(rawcodingL2(rawcoding(ddd)));
+                            final_data.AddRange(coding(ddd));
                         }
                         Console.WriteLine(i.ToString());
                     }
@@ -74,8 +76,9 @@ namespace Stock_deep_learning
             pp = "e:\\data\\";
 #endif
             StockFileDAO sfd = new StockFileDAO();
-            SmallWindowTrans ts = new SmallWindowTrans();
-            System.Threading.Tasks.Parallel.For(0, 4000, i =>
+           SmallWindowTrans ts = new SmallWindowTrans();
+          //   SmallWindowV ts = new SmallWindowV();
+            System.Threading.Tasks.Parallel.For(0, 400, i =>
             {
                 string s = i.ToString("0000");
 
@@ -85,7 +88,7 @@ namespace Stock_deep_learning
 
                     if (sfd.check("SH60" + s, pp) != false)
                     {
-                        data = sfd.getData("SH60" + s, pp, 2000, 2012);
+                        data = sfd.getData("SH60" + s, pp, 2011, 2014);
 
                         //  Transform ts = new Transform();
                         // SimpleTrans ts = new SimpleTrans();
@@ -95,9 +98,10 @@ namespace Stock_deep_learning
                         if (data != null)
                         {
                             List<double[]> ddd = ts.getRawFeature(35, 30, data, 30);
-                            final_data.AddRange(SecondeLayercoding(ddd));
+                          //  final_data.AddRange(SecondeLayercoding(ddd));
 
                            // final_data.AddRange(coding(ddd));
+                            final_data.AddRange(rawcodingL2(ddd));
                         }
                         Console.WriteLine(i.ToString());
                     }
@@ -113,13 +117,13 @@ namespace Stock_deep_learning
             double[][] inputarray=input.ToArray();
             int index=0;
             double[] r;
-            double[] tt = new double[1000];
+            double[] tt = new double[501];
             for (int i = 0; i < inputarray.Length; i++)
             {
                 r = network.GenerateOutput(inputarray[i]);
                 index++;
                 temp.Add(r);
-                if (index % 10 == 0)
+                if (index % 5 == 0)
                 {
                     double[][] temparray = temp.ToArray();
                     for (int j=0; j < temparray.Length; j++)
@@ -129,6 +133,8 @@ namespace Stock_deep_learning
                             tt[j + m] = temparray[j][m];
                         }
                     }
+                    Random rrr = new Random();
+                    tt[tt.Length - 1] = rrr.Next() % 2;
                     result.Add(tt);
                     index = 0;
                 }
@@ -197,35 +203,35 @@ namespace Stock_deep_learning
             int index = 0;
             double[] r;
             double[] tt = new double[1000];
-            double[] rsecond=new double[101];
+            double[] rsecond=new double[network.Hidden.Neurons.Count()+1];
             double[] rr;
             int label=0;
             for (int i = 0; i < inputarray.Length-1; i++)
             {
                 r = network.GenerateOutput(inputarray[i]);
-               
-                index++;
-                temp.Add(r);
-                if (index % 10 == 0)
-                {
-                    double[][] temparray = temp.ToArray();
+                
+               // index++;
+               // temp.Add(r);
+                //if (index % 5 == 0)
+                //{
+                //    double[][] temparray = temp.ToArray();
                     label = checklable(inputarray[i + 1]);
-                    for (int j = 0; j < temparray.Length; j++)
+                //    for (int j = 0; j < temparray.Length; j++)
+                //    {
+                //        for (int m = 0; m < temparray[j].Length; m++)
+                //        {
+                //            tt[j + m] = temparray[j][m];
+                //        }
+                //    }
+                //    rr= network2.GenerateOutput(tt);
+                    for(int m=0;m<r.Length;m++)
                     {
-                        for (int m = 0; m < temparray[j].Length; m++)
-                        {
-                            tt[j + m] = temparray[j][m];
-                        }
+                        rsecond[m]=r[m];
                     }
-                    rr= network2.GenerateOutput(tt);
-                    for(int m=0;m<rr.Length;m++)
-                    {
-                        rsecond[m]=rr[m];
-                    }
-                    rsecond[100]=label;
+                    rsecond[rsecond.Length-1]=label;
                     result.Add(rsecond);
                     index = 0;
-                }
+              //  }
             }
             return result;
 
@@ -244,36 +250,40 @@ namespace Stock_deep_learning
                 }
             }
             int max=0;
-              for(int i=870;i<900;i++)
+             // for(int i=870;i<900;i++)
+            for (int i = 540; i < 570; i++)
             {
                 if(input[i]==1)
                 {
-                    max=i-870;
+                    //max=i-870;
+                    max = i - 540;
                     break;
                 }
             }
-              if (max - min > 10)
+              if (max - min > 5)
                   return 1;
-              max = 0;
-              min = 0;
-              for (int i = 479; i > 449; i--)
-              {
-                  if (input[i] == 1)
-                  {
-                      min = 479-i;
-                      break;
-                  }
-              }
-              for (int i = 899; i >869; i--)
-              {
-                  if (input[i] == 1)
-                  {
-                      max = 899-i;
-                      break;
-                  }
-              }
-              if (max-min > 10)
+              if (min - max > 5)
                   return -1;
+              //max = 0;
+              //min = 0;
+              //for (int i = 29; i >= 0; i--)
+              //{
+              //    if (input[i] == 1)
+              //    {
+              //        min = 29-i;
+              //        break;
+              //    }
+              //}
+              //for (int i = 899; i >869; i--)
+              //{
+              //    if (input[i] == 1)
+              //    {
+              //        max = 899-i;
+              //        break;
+              //    }
+              //}
+              //if (max-min > 5)
+              //    return -1;
               return 0;
         }
     }

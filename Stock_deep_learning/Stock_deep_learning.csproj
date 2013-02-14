@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddMovingAverage.cs" />
+    <Compile Include="DeepNetStack.cs" />
     <Compile Include="FirstLayerCoding.cs" />
     <Compile Include="LoadData.cs" />
     <Compile Include="StockTraining.cs" />

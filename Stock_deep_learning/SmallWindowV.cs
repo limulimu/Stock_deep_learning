@@ -37,7 +37,7 @@ namespace Stock_deep_learning
                   
                 }
                 double block = max / framesize;
-                double[] frame = new double[window_size * framesize];
+                double[] frame = new double[window_size * framesize+1];
                 for (int window = step; window < step + window_size; window++)
                 {
                     //judge if one block should be 0 or 1
@@ -74,6 +74,8 @@ namespace Stock_deep_learning
                     }
 
                 }
+                Random rrr = new Random();
+                frame[frame.Length - 1] = rrr.Next() % 2;
                 result.Add(frame);
 
                 //  ar.Add(frame);
