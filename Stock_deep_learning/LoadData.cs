@@ -9,34 +9,36 @@ namespace Stock_deep_learning
     {
         public List<double[]> Load()
         {
-           
+
             List<double[]> final_data = new List<double[]>();
             string pp = "";
 #if DEBUG
            pp="e:\\data\\";
 #endif
-           
-            System.Threading.Tasks.Parallel.For(0, 400, i =>
+
+            System.Threading.Tasks.Parallel.For(0, 400, (i) =>
             {
                 string s = i.ToString("0000");
-               
+
                 double[][] data;
-             //   lock (final_data)
+                
+                lock (final_data)
                 {
                     StockFileDAO sfd = new StockFileDAO();
                     if (sfd.check("SH60" + s, pp) != false)
                     {
-                        data = sfd.getData("SH60" + s, pp,1990,2012);
+                        data = sfd.getData("SH60" + s, pp, 1990, 2012);
 
-                       //  Transform ts = new Transform();
+                        //  Transform ts = new Transform();
                         // SimpleTrans ts = new SimpleTrans();
                         // VTrans ts = new VTrans();
-                       SmallWindowTrans ts = new SmallWindowTrans();
-                        // SmallWindowV ts = new SmallWindowV();
+                        //SmallWindowTrans ts = new SmallWindowTrans();
+                        SmallWindowV ts = new SmallWindowV();
                         List<double[]> ddd;
                         if (data != null)
                         {
-                            ddd = ts.getRawFeature(35, 5, data, 30);
+                            ddd = ts.getRawFeature(35, 30, data, 30);
+                            
                             final_data.AddRange(ddd);
                         }
                         Console.WriteLine(i.ToString());

@@ -18,10 +18,16 @@ namespace Stock_deep_learning
     {
         public void CreateDeepNet(List<double[]> final_inputs, int inputsCount, double LearningRate, params int[] hiddenNeurons)
         {
+            if (final_inputs.Contains(null))
+            {
+                int n= final_inputs.IndexOf(null);
+                return;
+            }
+            
             DeepBeliefNetwork network = new DeepBeliefNetwork(inputsCount, hiddenNeurons);
             double[][] inputs = final_inputs.ToArray();
             DeepBeliefNetworkLearning target = new DeepBeliefNetworkLearning(network)
-            
+
             {
                 Algorithm = (h, v, i) => new ContrastiveDivergenceLearning(h, v)
                 {
@@ -46,20 +52,31 @@ namespace Stock_deep_learning
                 double[][][] batches = layerInputs.Subgroups(groups);
                 double error = double.MaxValue;
                 int index = 0;
-                while (error>layerInputs[0].Length/20)
+                while (true)
                 {
-                    foreach (double[][] ppp in batches)
+                    if (error < layerInputs[0].Length / 20 || error < 0.5)
+                        break;
+                    for (int i = 0; i < batches.Length; i++)
                     {
+
+
                         bool check = false;
-                        foreach (double[] p in ppp)
+                        foreach (double[] p in batches[i])
                         {
                             if (p == null)
+                            {
                                 check = true;
+                                break;
+                            }
                         }
                         if (check)
-                            continue;
-                        error = target.RunEpoch(ppp) / ppp.Length;
+                            break;
+                     //   if (batches[i].Contains(null))
+                       //     continue;
+                        error = target.RunEpoch(batches[i]) / batches[i].Length;
                         Console.WriteLine(error.ToString());
+                        if (error < layerInputs[0].Length / 20 || error < 0.5)
+                            break;
                         index++;
                         if (index % 10000 == 0)
                         {
@@ -69,7 +86,7 @@ namespace Stock_deep_learning
                     }
                 }
             }
-          
+
         }
     }
 }
