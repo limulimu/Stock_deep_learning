@@ -43,10 +43,10 @@ namespace Stock_deep_learning
                 // Create mini-batches to speed learning
                 int[] groups = Accord.Statistics.Tools
                     .RandomGroups(layerInputs.Length, batchCount);
-                double[][][] batches = inputs.Subgroups(groups);
+                double[][][] batches = layerInputs.Subgroups(groups);
                 double error = double.MaxValue;
                 int index = 0;
-                while (error>10)
+                while (error>layerInputs[0].Length/20)
                 {
                     foreach (double[][] ppp in batches)
                     {
@@ -58,7 +58,7 @@ namespace Stock_deep_learning
                         }
                         if (check)
                             continue;
-                        error = target.RunEpoch(ppp);
+                        error = target.RunEpoch(ppp) / ppp.Length;
                         Console.WriteLine(error.ToString());
                         index++;
                         if (index % 10000 == 0)

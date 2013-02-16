@@ -127,6 +127,7 @@
     <Compile Include="SmallWindowV.cs" />
     <Compile Include="StockFileDAO.cs" />
     <Compile Include="TestTainedNet.cs" />
+    <Compile Include="TestTrainedDeepNet.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="VTrans.cs" />
   </ItemGroup>

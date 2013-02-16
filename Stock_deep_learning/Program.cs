@@ -63,15 +63,20 @@ namespace Stock_deep_learning
             //                            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,};
 
             //tn.TestTrained(tt, 30);
-
+            double[] tt ={1,1,1,0,0};
+            TestTrainedDeepNet ttdn = new TestTrainedDeepNet();
+            ttdn.Test(tt, 30);
                 //FirstLayerCoding ld = new FirstLayerCoding();
                // List<double[]> dd = ld.LoadL2("p151-100.ann", "p101-50.ann");
-                  LoadData ld = new LoadData();
+              //    LoadData ld = new LoadData();
               //   StockTraining st = new StockTraining();
-                  DeepNetStack dns = new DeepNetStack();
+             //     DeepNetStack dns = new DeepNetStack();
                  
-              List<double[]> dd = ld.Load();
-              dns.CreateDeepNet(dd, 150, 0.001, 100, 50, 20, 10, 5);
+              //List<double[]> dd = ld.Load();
+              //dns.CreateDeepNet(dd, 150, 0.001, 100, 50, 20, 10, 5);
+
+          
+            
              //  st.train(dd, 51, 30, 0.01);
             //foreach (double[] d in dd)
            // {

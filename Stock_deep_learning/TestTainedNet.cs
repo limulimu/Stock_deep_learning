@@ -22,13 +22,13 @@ namespace Stock_deep_learning
             RestrictedBoltzmannMachine network1 = (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-100.ann");
         //    RestrictedBoltzmannMachine network2 = (RestrictedBoltzmannMachine)ActivationNetwork.Load("P-50.ann");
             // double[] rr=network.Compute(input);
-             double[] r0 = network.GenerateOutput(addone(input));
+             double[] r0 = network.Compute(addone(input));
             // double[] r1 = network1.GenerateOutput(addone(r0));
           //   double[] r2 = network2.GenerateOutput(addone(r1));
           //  double[] rr2 = network1.GenerateInput(r1);
           //   double[] rr1 = network1.GenerateInput(cutone(rr2));
-             double[] r = network.GenerateInput(r0);
-           //  double[] r= network.Reconstruct(rr);
+           //  double[] r = network.GenerateInput(r0);
+             double[] r= network.Reconstruct(r0);
 
            //  foreach (double d in input)
             //     Console.Write(d.ToString() + ",");
