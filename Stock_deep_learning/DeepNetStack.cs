@@ -23,8 +23,10 @@ namespace Stock_deep_learning
                 int n= final_inputs.IndexOf(null);
                 return;
             }
-            
-            DeepBeliefNetwork network = new DeepBeliefNetwork(inputsCount, hiddenNeurons);
+           // NoisyRectiﬁedLinearFunction activation = new NoisyRectiﬁedLinearFunction();
+           // GaussianFunction activation = new GaussianFunction();
+            BernoulliFunction activation = new BernoulliFunction();
+            DeepBeliefNetwork network = new DeepBeliefNetwork(activation , inputsCount, hiddenNeurons);
             double[][] inputs = final_inputs.ToArray();
             DeepBeliefNetworkLearning target = new DeepBeliefNetworkLearning(network)
 
@@ -44,7 +46,7 @@ namespace Stock_deep_learning
                 target.LayerIndex = layer;
 
                 double[][] layerInputs = target.GetLayerInput(inputs);
-                int batchCount = Math.Max(1, layerInputs.Length / 1000);
+                int batchCount = Math.Max(1, layerInputs.Length / 100);
 
                 // Create mini-batches to speed learning
                 int[] groups = Accord.Statistics.Tools
@@ -52,39 +54,45 @@ namespace Stock_deep_learning
                 double[][][] batches = layerInputs.Subgroups(groups);
                 double error = double.MaxValue;
                 int index = 0;
+                double lasterror=double.MaxValue;
                 while (true)
                 {
-                    if (error < layerInputs[0].Length / 20 || error < 0.5)
+                    if (error < layerInputs[0].Length / 10 || error < 10)
                         break;
                     for (int i = 0; i < batches.Length; i++)
                     {
 
 
-                        bool check = false;
-                        foreach (double[] p in batches[i])
-                        {
-                            if (p == null)
-                            {
-                                check = true;
-                                break;
-                            }
-                        }
-                        if (check)
-                            break;
+                        //bool check = false;
+                        //foreach (double[] p in batches[i])
+                        //{
+                        //    if (p == null)
+                        //    {
+                        //        check = true;
+                        //        break;
+                        //    }
+                        //}
+                        //if (check)
+                        //    break;
                      //   if (batches[i].Contains(null))
                        //     continue;
                         error = target.RunEpoch(batches[i]) / batches[i].Length;
-                        Console.WriteLine(error.ToString());
-                        if (error < layerInputs[0].Length / 20 || error < 0.5)
+                        Console.WriteLine(error .ToString());
+                        if (error < layerInputs[0].Length / 10 || error < 10)
                             break;
                         index++;
                         if (index % 10000 == 0)
                         {
                             Random r = new Random();
-                            network.Save("rrr" + index.ToString() + r.Next().ToString() + ".ann");
+                            network.Save("rv" + index.ToString() + r.Next().ToString() + ".ann");
+                            if (Math.Abs(lasterror - error)/error  < 0.01)
+                                break;
+                            lasterror = error;
                         }
                     }
                 }
+                Random rr = new Random();
+                network.Save("rrr" + index.ToString() + rr.Next().ToString() + ".ann");
             }
 
         }

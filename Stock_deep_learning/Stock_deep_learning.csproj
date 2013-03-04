@@ -49,29 +49,54 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accord">
-      <HintPath>..\..\accord-read-only\Samples\Neuro\Deep\bin\Release\Accord.dll</HintPath>
+    <Reference Include="Accord.Audio">
+      <HintPath>..\..\accord-read-only\Release\Accord.Audio.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.Controls">
-      <HintPath>..\..\accord-read-only\Samples\Neuro\Deep\bin\Release\Accord.Controls.dll</HintPath>
+    <Reference Include="Accord.Audio.Formats">
+      <HintPath>..\..\accord-read-only\Release\Accord.Audio.Formats.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.Controls.Imaging">
-      <HintPath>..\..\accord-read-only\Samples\Neuro\Deep\bin\Release\Accord.Controls.Imaging.dll</HintPath>
+    <Reference Include="Accord.Audition">
+      <HintPath>..\..\accord-read-only\Release\Accord.Audition.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.Imaging">
-      <HintPath>..\..\accord-read-only\Samples\Neuro\Deep\bin\Release\Accord.Imaging.dll</HintPath>
+    <Reference Include="Accord.Controls, Version=2.8.1.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\accord-read-only\Release\Accord.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.MachineLearning">
-      <HintPath>..\..\accord-read-only\Samples\Neuro\Deep\bin\Release\Accord.MachineLearning.dll</HintPath>
+    <Reference Include="Accord.Controls.Audio">
+      <HintPath>..\..\accord-read-only\Release\Accord.Controls.Audio.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.Math">
-      <HintPath>..\..\accord-read-only\Samples\Neuro\Deep\bin\Release\Accord.Math.dll</HintPath>
+    <Reference Include="Accord.Controls.Imaging, Version=2.8.1.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\accord-read-only\Release\Accord.Controls.Imaging.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.Neuro">
-      <HintPath>..\..\accord-read-only\Samples\Neuro\Deep\bin\Release\Accord.Neuro.dll</HintPath>
+    <Reference Include="Accord.Controls.Vision">
+      <HintPath>..\..\accord-read-only\Release\Accord.Controls.Vision.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.Statistics">
-      <HintPath>..\..\accord-read-only\Samples\Neuro\Deep\bin\Release\Accord.Statistics.dll</HintPath>
+    <Reference Include="Accord.DirectSound">
+      <HintPath>..\..\accord-read-only\Release\Accord.DirectSound.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Imaging, Version=2.8.1.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\accord-read-only\Release\Accord.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.MachineLearning, Version=2.8.1.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\accord-read-only\Release\Accord.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math, Version=2.8.1.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\accord-read-only\Release\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Neuro, Version=2.8.1.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\accord-read-only\Release\Accord.Neuro.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics, Version=2.8.1.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\accord-read-only\Release\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Vision">
+      <HintPath>..\..\accord-read-only\Release\Accord.Vision.dll</HintPath>
     </Reference>
     <Reference Include="AForge, Version=2.2.4.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -105,13 +130,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\accord-read-only\Samples\Neuro\Deep\bin\Release\AForge.Video.dll</HintPath>
     </Reference>
+    <Reference Include="SlimDX">
+      <HintPath>..\..\accord-read-only\Release\SlimDX.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\accord-read-only\Release\ZedGraph.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddMovingAverage.cs" />

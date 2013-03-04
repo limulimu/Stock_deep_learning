@@ -27,13 +27,13 @@ namespace Stock_deep_learning
                     StockFileDAO sfd = new StockFileDAO();
                     if (sfd.check("SH60" + s, pp) != false)
                     {
-                        data = sfd.getData("SH60" + s, pp, 1990, 2012);
+                        data = sfd.getData("SH60" + s, pp, 2011, 2015);
 
                         //  Transform ts = new Transform();
                         // SimpleTrans ts = new SimpleTrans();
                         // VTrans ts = new VTrans();
-                        //SmallWindowTrans ts = new SmallWindowTrans();
-                        SmallWindowV ts = new SmallWindowV();
+                        SmallWindowTrans ts = new SmallWindowTrans();
+                       // SmallWindowV ts = new SmallWindowV();
                         List<double[]> ddd;
                         if (data != null)
                         {
