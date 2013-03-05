@@ -57,8 +57,7 @@ namespace Stock_deep_learning
                 double lasterror=double.MaxValue;
                 while (true)
                 {
-                    if (error < layerInputs[0].Length / 10 || error < 10)
-                        break;
+                   
                     for (int i = 0; i < batches.Length; i++)
                     {
 
@@ -78,18 +77,22 @@ namespace Stock_deep_learning
                        //     continue;
                         error = target.RunEpoch(batches[i]) / batches[i].Length;
                         Console.WriteLine(error .ToString());
-                        if (error < layerInputs[0].Length / 10 || error < 10)
-                            break;
+                       
                         index++;
-                        if (index % 10000 == 0)
+                        if (index % 100 == 0)
                         {
-                            Random r = new Random();
-                            network.Save("rv" + index.ToString() + r.Next().ToString() + ".ann");
-                            if (Math.Abs(lasterror - error)/error  < 0.01)
+                           // if (error < layerInputs[0].Length / 8 || error < 10)
+                           //     break;
+                           // Random r = new Random();
+                          //  network.Save("rv" + index.ToString() + r.Next().ToString() + ".ann");
+                            if (Math.Abs(lasterror - error)/error  <=0.01)
                                 break;
                             lasterror = error;
                         }
                     }
+                    //if (error < layerInputs[0].Length / 8 || error < 10)
+                    if (Math.Abs(lasterror - error) / error <=0.01)
+                        break;
                 }
                 Random rr = new Random();
                 network.Save("rrr" + index.ToString() + rr.Next().ToString() + ".ann");

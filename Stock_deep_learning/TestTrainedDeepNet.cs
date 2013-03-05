@@ -18,7 +18,7 @@ namespace Stock_deep_learning
     {
         public void Test(double[] input,int linelenth)
         {
-            DeepBeliefNetwork dn = DeepBeliefNetwork.Load("rv20000357311193.ann");
+            DeepBeliefNetwork dn = DeepBeliefNetwork.Load("rrr600779429327.ann");
            double[] cc= dn.Compute(input);
             double[] r = dn.Reconstruct(cc);
             int index = 0;
