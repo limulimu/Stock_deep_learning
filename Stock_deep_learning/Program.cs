@@ -73,7 +73,7 @@ namespace Stock_deep_learning
                   DeepNetStack dns = new DeepNetStack();
 
            List<double[]> dd = ld.Load();
-            dns.CreateDeepNet(dd, 900, 0.01,500);
+            dns.CreateDeepNet(dd, 900, 0.0001,500,200,50,10);
 
           
             

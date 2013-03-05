@@ -23,9 +23,9 @@ namespace Stock_deep_learning
                 int n= final_inputs.IndexOf(null);
                 return;
             }
-           // NoisyRectiﬁedLinearFunction activation = new NoisyRectiﬁedLinearFunction();
+            NoisyRectiﬁedLinearFunction activation = new NoisyRectiﬁedLinearFunction();
            // GaussianFunction activation = new GaussianFunction();
-            BernoulliFunction activation = new BernoulliFunction();
+           // BernoulliFunction activation = new BernoulliFunction();
             DeepBeliefNetwork network = new DeepBeliefNetwork(activation , inputsCount, hiddenNeurons);
             double[][] inputs = final_inputs.ToArray();
             DeepBeliefNetworkLearning target = new DeepBeliefNetworkLearning(network)
