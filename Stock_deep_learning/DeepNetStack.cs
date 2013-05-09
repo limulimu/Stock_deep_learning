@@ -35,7 +35,7 @@ namespace Stock_deep_learning
                 {
                     LearningRate = LearningRate,
                     Momentum = 0.5,
-                    Decay = 0.001,
+                    Decay = 0.01,
                 },
             };
             new GaussianWeights(network).Randomize();
@@ -76,7 +76,13 @@ namespace Stock_deep_learning
                      //   if (batches[i].Contains(null))
                        //     continue;
                         error = target.RunEpoch(batches[i]) / batches[i].Length;
-                        Console.WriteLine(error .ToString());
+                        Console.WriteLine("e"+error .ToString());
+                        double sss = 0.0;
+                        foreach (double[] d in batches[i])
+                        {
+                            sss += d.Sum();
+                        }
+                        Console.WriteLine("s" + (sss / batches[i].Length).ToString());
                        
                         index++;
                         if (index % 100 == 0)
@@ -95,7 +101,7 @@ namespace Stock_deep_learning
                         break;
                 }
                 Random rr = new Random();
-                network.Save("rrr" + index.ToString() + rr.Next().ToString() + ".ann");
+                network.Save("rrr" + index.ToString()+"_" + rr.Next().ToString() + ".ann");
             }
 
         }

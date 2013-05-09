@@ -33,27 +33,27 @@ namespace Stock_deep_learning
                 for (int step = i; step < i + full_length - window_size; step += window_size / 2)
                 {
                     double[] frame = new double[window_size*4];
-                    for (int window = step; window < step + window_size; window++)
+                    for (int window = step; window < step + window_size; window ++)
                     {
                         //judge if one block should be 0 or 1
-                     //   for (int his = 1; his <= 4; his++)
-                       // {
-                         //   double zhuzi = his * block;
-                            double relative_high = (data[window][1] - min) / (max - min);
-                            double relative_low = (data[window][2] - min) / (max - min);
-                            double relative_open = (data[window][0] - min) / (max - min);
-                            double relative_close = (data[window][3] - min) / (max - min);
-                            //  Console.WriteLine(zhuzi.ToString());
-                            //  Console.WriteLine(relative_low.ToString());
-                            //  Console.ReadKey();
+                        //   for (int his = 1; his <= 4; his++)
+                        // {
+                        //   double zhuzi = his * block;
+                        double relative_high = (data[window][1] - min) / (max - min);
+                        double relative_low = (data[window][2] - min) / (max - min);
+                        double relative_open = (data[window][0] - min) / (max - min);
+                        double relative_close = (data[window][3] - min) / (max - min);
+                        //  Console.WriteLine(zhuzi.ToString());
+                        //  Console.WriteLine(relative_low.ToString());
+                        //  Console.ReadKey();
 
-                            //if (zhuzi < relative_high && zhuzi > relative_low)
-                                //  if (zhuzi > relative_low)
-                            frame[(window - step) + 0] = relative_open;
-                            frame[(window - step) + 1] = relative_high;
-                            frame[(window - step) + 2] = relative_low;
-                            frame[(window - step) + 3] = relative_close;
-                      //  }
+                        //if (zhuzi < relative_high && zhuzi > relative_low)
+                        //  if (zhuzi > relative_low)
+                        frame[(window - step)*4 + 0] = relative_open;
+                        frame[(window - step) * 4 + 1] = relative_high;
+                        frame[(window - step) * 4 + 2] = relative_low;
+                        frame[(window - step) * 4 + 3] = relative_close;
+                        //  }
 
                     }
                     result.Add(frame);

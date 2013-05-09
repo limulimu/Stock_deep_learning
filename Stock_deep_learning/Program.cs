@@ -11,6 +11,7 @@ using Accord.Neuro;
 using AForge;
 using Accord.Math;
 using System.Threading;
+using System.IO;
 
 namespace Stock_deep_learning
 {
@@ -61,20 +62,33 @@ namespace Stock_deep_learning
             //                            1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             //                            0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             //                            0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
-            //TestTrainedDeepNet ttdn = new TestTrainedDeepNet();
+           // TestTrainedDeepNet ttdn = new TestTrainedDeepNet();
             //ttdn.Test(tt, 30);
-           // tn.TestTrained(tt, 30);
-           // double[] tt = { 1, 1, 1, 1,1 ,1,1,1,1,1};
-        
+          //  tn.TestTrained(tt, 30);
+           // double[] tt = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+            //ttdn.Test(tt, 30);
+            FileStream fs = new FileStream("features.txt", FileMode.Open);
+            StreamReader sr = new StreamReader(fs);
+            List<double[]> dd = new List<double[]>();
+            while (sr.Peek() != -1)
+            {
+                string[] ss = sr.ReadLine().Split(',');
+                double[] ddd = new double[ss.Length-1];
+                for (int i = 0; i < ddd.Length; i++)
+                {
+                    ddd[i] = double.Parse(ss[i]);
+                }
+                dd.Add(ddd);
+            }
                 //FirstLayerCoding ld = new FirstLayerCoding();
                // List<double[]> dd = ld.LoadL2("p151-100.ann", "p101-50.ann");
                   
                 //   StockTraining st = new StockTraining();
-            LoadData ld = new LoadData();
+         //   LoadData ld = new LoadData();
             DeepNetStack dns = new DeepNetStack();
 
-            List<double[]> dd = ld.Load();
-            dns.CreateDeepNet(dd, 900, 0.1, 2000, 1000, 500,30);
+         //   List<double[]> dd = ld.Load();
+            dns.CreateDeepNet(dd, dd[0].Length, 0.01, 2000,1000,500,50);
 
           
             
