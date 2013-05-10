@@ -12,28 +12,36 @@ using AForge;
 using AForge.Neuro;
 using Accord.Math;
 using System.Threading;
+using System.IO;
+
 namespace Stock_deep_learning
 {
     class TestTrainedDeepNet
     {
-        public void Test(double[] input,int linelenth)
+        public void Test(List<double[]> input)
         {
-            DeepBeliefNetwork dn = DeepBeliefNetwork.Load("rrr2500_348086692.ann");
+            DeepBeliefNetwork dn = DeepBeliefNetwork.Load("rrr512_953471786.ann");
           // double[] cc= dn.Compute(input);
-            double[] r = dn.Reconstruct(input);
-            int index = 0;
-            for (int i = 1; i <= r.Length; i++)
+          //  double[] r = dn.Reconstruct(input);
+            FileStream fs = new FileStream("code.txt", FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs);
+            foreach (double[] dd in input)
             {
-                Console.Write(r[i - 1].ToString("N0") + ",");
-                // Console.Write((r[i-1]>0.1?1:0).ToString() + ",");
-                // if((i%(linelenth<r.Length?linelenth:r.Length)) ==0 && i!=0)
-                index++;
-                if (index == linelenth)
+                double[] r = dn.GenerateOutput(dd);
+                for (int i = 0; i < r.Length; i++)
                 {
-                    Console.WriteLine();
-                    index = 0;
-                }
+                   sw.Write(r[i].ToString() + ",");
+                    // Console.Write(r[i].ToString() + ",");
+                    // Console.Write((r[i-1]>0.1?1:0).ToString() + ",");
+                    // if((i%(linelenth<r.Length?linelenth:r.Length)) ==0 && i!=0)
+                  }
+                sw.WriteLine();
+              //  Console.WriteLine();
             }
+            sw.Close();
+            fs.Close();
+           
+            
         }
     }
 }

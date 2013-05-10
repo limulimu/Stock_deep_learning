@@ -62,8 +62,8 @@ namespace Stock_deep_learning
             //                            1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             //                            0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             //                            0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
-           // TestTrainedDeepNet ttdn = new TestTrainedDeepNet();
-            //ttdn.Test(tt, 30);
+            TestTrainedDeepNet ttdn = new TestTrainedDeepNet();
+           
           //  tn.TestTrained(tt, 30);
            // double[] tt = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
             //ttdn.Test(tt, 30);
@@ -80,15 +80,16 @@ namespace Stock_deep_learning
                 }
                 dd.Add(ddd);
             }
+            ttdn.Test(dd);
                 //FirstLayerCoding ld = new FirstLayerCoding();
                // List<double[]> dd = ld.LoadL2("p151-100.ann", "p101-50.ann");
                   
                 //   StockTraining st = new StockTraining();
          //   LoadData ld = new LoadData();
-            DeepNetStack dns = new DeepNetStack();
+          //  DeepNetStack dns = new DeepNetStack();
 
-         //   List<double[]> dd = ld.Load();
-            dns.CreateDeepNet(dd, dd[0].Length, 0.01, 2000,1000,500,50);
+           // List<double[]> dd = ld.Load();
+          //  dns.CreateDeepNet(dd, dd[0].Length, 0.01,1000,100,10);
 
           
             

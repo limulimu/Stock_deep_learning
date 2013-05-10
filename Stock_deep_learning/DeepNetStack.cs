@@ -23,9 +23,9 @@ namespace Stock_deep_learning
                 int n= final_inputs.IndexOf(null);
                 return;
             }
-            NoisyRectiﬁedLinearFunction activation = new NoisyRectiﬁedLinearFunction();
+           // NoisyRectiﬁedLinearFunction activation = new NoisyRectiﬁedLinearFunction();
            // GaussianFunction activation = new GaussianFunction();
-           // BernoulliFunction activation = new BernoulliFunction();
+            BernoulliFunction activation = new BernoulliFunction();
             DeepBeliefNetwork network = new DeepBeliefNetwork(activation , inputsCount, hiddenNeurons);
             double[][] inputs = final_inputs.ToArray();
             DeepBeliefNetworkLearning target = new DeepBeliefNetworkLearning(network)
@@ -75,7 +75,19 @@ namespace Stock_deep_learning
                         //    break;
                      //   if (batches[i].Contains(null))
                        //     continue;
-                        error = target.RunEpoch(batches[i]) / batches[i].Length;
+                    //    try
+                     //   {
+                            error = target.RunEpoch(batches[i]) / batches[i].Length;
+                    //    }
+                        //catch (AggregateException exception)
+                        //{
+                        //    foreach (Exception ex in exception.InnerExceptions)
+                        //    {
+                        //        Console.WriteLine(ex.ToString());
+                        //    }
+                        //    Console.Read();
+                        //}
+
                         Console.WriteLine("e"+error .ToString());
                         double sss = 0.0;
                         foreach (double[] d in batches[i])
